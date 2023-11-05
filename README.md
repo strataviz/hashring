@@ -27,11 +27,17 @@ if node := ring.Get("id"); node != "" {
 }
 ```
 
-For pull style distributed applications, the function `Mine(name, key)` exists to determine whether or not the key that is being pulled belongs to the worker.  It returns a boolean value.  Assuming that the nodes use the hostname of the worker the following is an example:
+For pull style distributed applications, the function `Mine(name, key string)` exists to determine whether or not the key that is being pulled belongs to the worker.  It returns a boolean value.  Assuming that the nodes use the hostname of the worker the following is an example:
 
 ```go
 hostname, _ := os.Hostname()
 if ring.Mine(hostname, "id") {
   processFn(data)
 }
+```
+
+To remove a node (or nodes) use the `Remove(node string)` function.
+
+```go
+ring.Remove("server1", "server2")
 ```
